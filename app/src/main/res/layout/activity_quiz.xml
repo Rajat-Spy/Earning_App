@@ -42,6 +42,7 @@
             android:id="@+id/coinImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
             android:layout_weight="0"
             android:src="@drawable/dollar" />
 
@@ -181,7 +182,7 @@
         android:background="@drawable/background"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -191,19 +192,11 @@
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_win"
             android:layout_width="match_parent"
-            android:layout_height="700dp"
+            android:layout_height="match_parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/winning" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/poppins_bold"
-            android:gravity="center"
-            android:text="Yay You have won a chance to spin"
-            android:textSize="24dp" />
 
     </LinearLayout>
 
@@ -223,20 +216,11 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animation_lose"
-            android:layout_width="wrap_content"
-            android:layout_height="700dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/sorry" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/poppins_bold"
-            android:gravity="center"
-            android:text="Better luck next time"
-            android:textSize="24dp" />
 
     </LinearLayout>
 

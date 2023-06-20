@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.earningapp.R
 import com.example.earningapp.Withdrawl
 import com.example.earningapp.adapter.HistoryAdapter
+import com.example.earningapp.adapter.categoryAdapter
 import com.example.earningapp.databinding.FragmentHistoryBinding
 import com.example.earningapp.model.HistoryModelClass
 import com.example.earningapp.model.User
@@ -20,19 +21,36 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import java.util.Collections
 
 class HistoryFragment : Fragment() {
     val binding by lazy {
         FragmentHistoryBinding.inflate(layoutInflater)
     }
+    private lateinit var adapter: HistoryAdapter
     private var listHistory = ArrayList<HistoryModelClass>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        listHistory.add(HistoryModelClass("12:03", "200"))
-        listHistory.add(HistoryModelClass("1:03", "100"))
-        listHistory.add(HistoryModelClass("2:03", "500"))
-        listHistory.add(HistoryModelClass("3:03", "2070"))
+        Firebase.database.reference.child("playerCoinHistory").child(Firebase.auth.currentUser!!.uid).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                listHistory.clear()
+                 var listHistory1 = ArrayList<HistoryModelClass>()
+                for(dataSnapshot in snapshot.children){
+                    var data = dataSnapshot.getValue(HistoryModelClass::class.java)
+                    listHistory1.add(data!!)
+                    adapter.notifyDataSetChanged()
+
+                }
+                listHistory1.reverse()
+                listHistory.addAll(listHistory1)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     override fun onCreateView(
@@ -50,7 +68,7 @@ class HistoryFragment : Fragment() {
             bottomSheetDialog.enterTransition
         }
         binding.HistoryRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        var adapter = HistoryAdapter(listHistory)
+        adapter = HistoryAdapter(listHistory)
         binding.HistoryRecyclerView.adapter = adapter
         binding.HistoryRecyclerView.setHasFixedSize(true)
         // Inflate the layout for this fragment
@@ -69,6 +87,20 @@ class HistoryFragment : Fragment() {
 
             }
         )
+        Firebase.database.reference.child("playerCoin").child(Firebase.auth.currentUser!!.uid).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()) {
+                    var currentCoin = snapshot.getValue() as Long
+                    binding.coin.text = currentCoin.toString()
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
         return binding.root
     }
 

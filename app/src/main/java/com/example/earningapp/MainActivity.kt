@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
                 Firebase.auth.createUserWithEmailAndPassword(binding.userEmail.text.toString(), binding.userPassword.text.toString()).addOnCompleteListener {
                     if(it.isSuccessful){
                         var user = User(binding.userName.text.toString(), binding.userAge.text.toString().toInt(), binding.userEmail.text.toString(), binding.userPassword.text.toString())
-                        Firebase.database.reference.child("Users").child(Firebase.auth.currentUser!!.uid).setValue(user).addOnSuccessListener {
+                        Firebase.database.reference.child("Users").child(Firebase.auth.currentUser!!.uid).push().setValue(user).addOnSuccessListener {
                             startActivity(Intent(this, HomeActivity::class.java))
                             finish()
                         }

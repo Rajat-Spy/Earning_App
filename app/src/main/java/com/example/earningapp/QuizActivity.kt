@@ -26,9 +26,37 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var questionList: ArrayList<QuestionModel>
     var currentQuestion = 0
     var score = 0
+    var currentChance = 0L
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        Firebase.database.reference.child("playerCoin").child(Firebase.auth.currentUser!!.uid).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()) {
+                    var currentCoin = snapshot.getValue() as Long
+                    binding.coin.text = currentCoin.toString()
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+        Firebase.database.reference.child("PlayChance").child(Firebase.auth.currentUser!!.uid).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()) {
+                    currentChance = snapshot.value as Long
+                }
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
         questionList = ArrayList<QuestionModel>()
         var image = intent.getIntExtra("categoryimg", 0)
         var catText = intent.getStringExtra("questionType")
@@ -88,13 +116,25 @@ class QuizActivity : AppCompatActivity() {
     private fun nextQuestionAndScoreUpdate(s: String) {
         if(s == questionList.get(currentQuestion).answer){
             score += 10
+//            Toast.makeText(this, "score $score",Toast.LENGTH_SHORT).show()
         }
         currentQuestion++
         if(currentQuestion >= questionList.size){
             if(score >= (score/questionList.size*10)*100){
                 binding.win.visibility = View.VISIBLE
+                binding.option1.visibility = View.INVISIBLE
+                binding.option2.visibility = View.INVISIBLE
+                binding.option3.visibility = View.INVISIBLE
+                binding.option4.visibility = View.INVISIBLE
+                Firebase.database.reference.child("PlayChance").child(Firebase.auth.currentUser!!.uid).setValue(currentChance+1)
+                var isUpdated = false
+
             }else{
                 binding.losing.visibility = View.VISIBLE
+                binding.option1.visibility = View.INVISIBLE
+                binding.option2.visibility = View.INVISIBLE
+                binding.option3.visibility = View.INVISIBLE
+                binding.option4.visibility = View.INVISIBLE
             }
         }
         else {

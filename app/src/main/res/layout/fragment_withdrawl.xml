@@ -35,7 +35,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         <TextView
-            android:id="@+id/textView15"
+            android:id="@+id/currentCoins"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_bold"
@@ -71,7 +71,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView13" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName5"
+            android:id="@+id/amount"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginStart="15dp"
@@ -102,10 +102,10 @@
             android:paddingStart="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
+            app:layout_constraintTop_toBottomOf="@+id/amount" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/transfer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -114,6 +114,7 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             app:cornerRadius="10dp"
+            android:backgroundTint="#009688"
             app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName6"
             app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName6"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName6" />

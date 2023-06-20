@@ -1,3 +1,15 @@
 package com.example.earningapp.model
 
-data class HistoryModelClass(var timeAndDate: String, var coin: String)
+class HistoryModelClass {
+    var timeAndDate: String = ""
+    var coin: String = ""
+    var isWithdrawl: Boolean = false
+
+    constructor()
+    constructor(timeAndDate: String, coin: String, isWithdrawl: Boolean) {
+        this.timeAndDate = timeAndDate
+        this.coin = coin
+        this.isWithdrawl = isWithdrawl
+    }
+
+}
