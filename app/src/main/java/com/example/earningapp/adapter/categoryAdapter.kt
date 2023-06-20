@@ -1,9 +1,11 @@
 package com.example.earningapp.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.earningapp.QuizActivity
 import com.example.earningapp.databinding.CategoryItemBinding
 import com.example.earningapp.model.categoryModelClass
 
@@ -25,12 +27,12 @@ class categoryAdapter(
         var dataList = categoryList[position]
         holder.binding.categoryimage.setImageResource(dataList.catImage)
         holder.binding.category.text = dataList.catText
-//        holder.binding.categorybtn.setOnClickListener {
-//            var intent = Intent(requireActivity, QuizActivity::class.java)
-//            intent.putExtra("categoryimg", dataList.catImage)
-////            intent.putExtra("questionType", dataList.catText)
-//            requireActivity.startActivity(intent)
-//        }
+        holder.binding.categorybtn.setOnClickListener {
+            var intent = Intent(requireActivity, QuizActivity::class.java)
+            intent.putExtra("categoryimg", dataList.catImage)
+            intent.putExtra("questionType", dataList.catText)
+            requireActivity.startActivity(intent)
+        }
     }
 
 }

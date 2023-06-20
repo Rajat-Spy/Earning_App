@@ -8,8 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.example.earningapp.R
+import com.example.earningapp.Withdrawl
 import com.example.earningapp.databinding.FragmentSpinBinding
+import com.example.earningapp.model.User
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
+import com.google.firebase.ktx.Firebase
+
 class SpinFragment : Fragment() {
     private lateinit var binding: FragmentSpinBinding
     private lateinit var timer: CountDownTimer
@@ -25,31 +35,31 @@ class SpinFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSpinBinding.inflate(inflater, container, false)
-//        binding.coinImage.setOnClickListener{
-//            val bottomSheetDialog: BottomSheetDialogFragment = Withdrawl()
-//            bottomSheetDialog.show(requireActivity().supportFragmentManager, "TEST")
-//            bottomSheetDialog.enterTransition
-//        }
-//        binding.coin.setOnClickListener{
-//            val bottomSheetDialog: BottomSheetDialogFragment = Withdrawl()
-//            bottomSheetDialog.show(requireActivity().supportFragmentManager, "TEST")
-//            bottomSheetDialog.enterTransition
-//        }
-//        Firebase.database.reference.child("User").child(Firebase.auth.currentUser!!.uid).addValueEventListener(
-//            object : ValueEventListener {
-//                override fun onDataChange(snapshot: DataSnapshot) {
-//                    var user = snapshot.getValue<User>()
-////                    Log.d("MYTAG", "onDataChange: $snapshot")
-//                    binding.name.text = user?.name
-//
-//                }
-//
-//                override fun onCancelled(error: DatabaseError) {
-//                    TODO("Not yet implemented")
-//                }
-//
-//            }
-//        )
+        binding.coinImage.setOnClickListener{
+            val bottomSheetDialog: BottomSheetDialogFragment = Withdrawl()
+            bottomSheetDialog.show(requireActivity().supportFragmentManager, "TEST")
+            bottomSheetDialog.enterTransition
+        }
+        binding.coin.setOnClickListener{
+            val bottomSheetDialog: BottomSheetDialogFragment = Withdrawl()
+            bottomSheetDialog.show(requireActivity().supportFragmentManager, "TEST")
+            bottomSheetDialog.enterTransition
+        }
+        Firebase.database.reference.child("Users").child(Firebase.auth.currentUser!!.uid).addValueEventListener(
+            object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var user = snapshot.getValue<User>()
+//                    Log.d("MYTAG", "onDataChange: $snapshot")
+                    binding.name.text = user?.name
+
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            }
+        )
         return binding.root
     }
     private fun showResult(itemTitle: String) {
